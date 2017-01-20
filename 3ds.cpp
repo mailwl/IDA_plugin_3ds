@@ -1,29 +1,8 @@
 #include <vector>
 #include "ctr.h"
 #include "idaldr.h"
-#include "stdafx.h"
 
 #pragma comment(lib, "ida")
-
-typedef unsigned char u8;
-typedef signed char s8;
-
-typedef unsigned int u32;
-typedef int s32;
-
-typedef unsigned short u16;
-typedef short s16;
-
-typedef long long int s64;
-typedef unsigned long long int u64;
-
-typedef float f32;
-typedef double f64;
-
-//typedef unsigned char bit8;
-typedef unsigned short bit16;
-typedef unsigned int bit32;
-typedef unsigned long long int bit64;
 
 struct NCCH_Header {
     u8 signature[0x100];
@@ -67,65 +46,6 @@ struct ExeFs_Header {
     ExeFs_SectionHeader section[8];
     u8 reserved[0x80];
     u8 hashes[8][0x20];
-};
-
-struct storage_info_t {
-    bit64 exdataID;
-    bit64 system_save_data_ids;
-    bit64 stor_access_uniq_ids;
-    u8 fs_access_info[7];
-    u8 other_attr;
-};
-
-struct access_control_info_t {
-    // ARM11 local system caps
-    bit64 programID;
-    bit32 core_version;
-    bit16 flag1_2;
-    u8 flag0;
-    u8 priority;
-    bit16 resource_limit_desc[16];
-    storage_info_t storage_info;
-    u8 service_access_control[32][8];
-    bit64 ext_service_access_control[2];
-    u8 reserved_0[0xF];
-    u8 resource_limit_cat;
-
-    // ARM11 kernel caps
-    bit32 kern_caps_desc[28];
-    u8 reserved_1[0xF];
-
-    // ARM9 Access Control
-    u8 arm9_acc_ctrl_desc[0xF];
-    u8 arm9_desc_version;
-};
-
-struct code_set_info_t {
-    bit32 offset;
-    bit32 size_in_blocks;
-    bit32 size_in_bytes;
-};
-
-struct exheader_t {
-    // system control info
-    u8 title[8];
-    u8 reserved_0[5];
-    u8 flag;
-    code_set_info_t code;
-    bit32 stack_size;
-    code_set_info_t ro;
-    bit32 reserved_1;
-    code_set_info_t data;
-    bit32 bss_size;
-    bit64 modules[48];
-    // - system info
-    bit64 savedata_size;
-    bit64 jumpID;
-    u8 reserved_2[0x30];
-    access_control_info_t aci;
-    u8 signature[0x100];
-    u8 public_key[0x100];
-    access_control_info_t aci_lim;
 };
 
 struct ExHeader_SystemInfoFlags {
