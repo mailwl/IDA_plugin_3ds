@@ -421,7 +421,7 @@ int idaapi accept_file(qstring *fileformatname, qstring *processor, linput_t *li
     firm firm;
     if (firm.load_header(li)) {
 		*fileformatname = "Nintendo 3DS firmware dump";
-		set_processor_type("ARM", SETPROC_LOADER);
+		*processor = "arm";
         return 1 | ACCEPT_FIRST;
     }
 
