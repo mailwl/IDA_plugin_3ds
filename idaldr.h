@@ -15,7 +15,6 @@
 //#include <auto.hpp>
 #include <diskio.hpp>
 //#include <kernwin.hpp>
-#include <windows.h>
 
 //----------------------------------
 
