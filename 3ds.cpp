@@ -416,27 +416,26 @@ void _3ds::load_file(linput_t* li) {
 
 class cia {};
 
-int idaapi accept_file(linput_t* li, char fileformatname[MAX_FILE_FORMAT_NAME], int n) {
-    if (n != 0)
-        return 0;
+int idaapi accept_file(qstring *fileformatname, qstring *processor, linput_t *li, const char *filename) {
 
     firm firm;
     if (firm.load_header(li)) {
-        qstrncpy(fileformatname, "Nintendo 3DS firmware dump", MAX_FILE_FORMAT_NAME);
-        set_processor_type("ARM", SETPROC_ALL | SETPROC_FATAL);
+		*fileformatname = "Nintendo 3DS firmware dump";
+		*processor = "arm";
         return 1 | ACCEPT_FIRST;
     }
 
     _3ds _3ds;
     if (_3ds.load_header(li)) {
-        qstrncpy(fileformatname, "Nintendo 3DS game dump", MAX_FILE_FORMAT_NAME);
-        set_processor_type("ARM", SETPROC_ALL | SETPROC_FATAL);
+		*fileformatname = "Nintendo 3DS game dump";
+		*processor = "arm";
         return 1 | ACCEPT_FIRST;
     }
     return 0;
 }
 
 void idaapi load_file(linput_t* li, ushort neflags, const char* fileformatname) {
+	set_processor_type("ARM", SETPROC_LOADER); //ida complains otherwise and putting this in accept_file won't work
     if (qstrcmp(fileformatname, "Nintendo 3DS firmware dump") == 0) {
         firm firm;
         firm.load_header(li);
